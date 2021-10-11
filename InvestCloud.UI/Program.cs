@@ -38,7 +38,7 @@ namespace InvestCloud.UI
                 .UseSerilog()
                 .Build();
 
-            var svc = ActivatorUtilities.CreateInstance<MathNetMatrixService>(host.Services);
+            var svc = ActivatorUtilities.CreateInstance<ParallelMatrixService>(host.Services);
             await svc.Run(1000);
 
         }
