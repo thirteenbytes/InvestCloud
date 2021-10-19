@@ -55,7 +55,7 @@ namespace InvestCloud.Core.Matrix
             }
             return result;
         }
-        public abstract MatrixFuncBase<T> DoMultiplication(MatrixFuncBase<T> b);
+        protected abstract MatrixFuncBase<T> DoMultiplication(MatrixFuncBase<T> b);
 
         public static MatrixFuncBase<T> operator *(MatrixFuncBase<T> a, MatrixFuncBase<T> b)
         {

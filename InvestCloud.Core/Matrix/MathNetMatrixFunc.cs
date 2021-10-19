@@ -6,8 +6,10 @@ namespace InvestCloud.Core.Matrix
     {
         public MathNetMatrixFunc(int size) : base(size) { }
 
-        public override MatrixFuncBase<double> DoMultiplication(MatrixFuncBase<double> b)
+        protected override MatrixFuncBase<double> DoMultiplication(MatrixFuncBase<double> b)
         {
+            
+            
             var matrixA = DenseMatrix.OfArray(this.data);
             var matrixB = DenseMatrix.OfArray(b.data);
 

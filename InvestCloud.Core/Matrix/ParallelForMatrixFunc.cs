@@ -10,7 +10,7 @@ namespace InvestCloud.Core.Matrix
     {        
         public ParallelForMatrixFunc(int size) : base(size) { }
         
-        public override MatrixFuncBase<int> DoMultiplication(MatrixFuncBase<int> b)
+        protected override MatrixFuncBase<int> DoMultiplication(MatrixFuncBase<int> b)
         {
             var resultMatrix = new ParallelForMatrixFunc(base.rowTotal);
             Parallel.For(0, this.rowTotal, i =>

@@ -25,15 +25,14 @@ namespace InvestCloud.App.Infrastructure
         public async Task Run(int matrixSize)
         {
             try
-            {
-
+            {                
                 var stopwatch = new Stopwatch();
 
 
                 _logger.LogInformation($"(1/5) Initializing and building Squares Matrices ({matrixSize} X {matrixSize})...");
 
                 stopwatch.Start();
-                (ParallelForMatrixFunc a, ParallelForMatrixFunc b) = await GetMatrixAsInt32(matrixSize);
+                (ParallelForMatrixFunc a, ParallelForMatrixFunc b) = await GetMatrices(matrixSize);
                 stopwatch.Stop();
 
                 _logger.LogInformation($"Build completed at {stopwatch.Elapsed};");
@@ -72,52 +71,14 @@ namespace InvestCloud.App.Infrastructure
 
         }
 
-        private async Task<(ParallelForMatrixFunc, ParallelForMatrixFunc)> GetMatrixAsInt32(int size)
+        private async Task<(ParallelForMatrixFunc, ParallelForMatrixFunc)> GetMatrices(int size)
         {
-            ParallelForMatrixFunc matrixA = null; ParallelForMatrixFunc matrixB = null;
-
-            var initResponse = await _numbersClient.Initialize(size);
-            if (initResponse.Success)
-            {
-                int initSize = initResponse.Value;
-                matrixA = new ParallelForMatrixFunc(initSize);
-                matrixB = new ParallelForMatrixFunc(initSize);
-
-                for (int i = 0; i < initSize; i++)
-                {
-                    var getResponseA = await _numbersClient.GetRow("A", i);
-                    if (getResponseA.Success)
-                    {
-                        var values = getResponseA.Value.ToArray<int>();
-
-                        List<int> numbers = values.Select(x => (int)x).ToList();
-                        matrixA.AddRow(i, numbers.ToArray());
-                    }
-                    else
-                    {
-                        throw new NumbersClientException($"Get Row endpoint failed: {getResponseA.Cause}");
-                    }
-
-                    var getResponseB = await _numbersClient.GetRow("B", i);
-                    if (getResponseB.Success)
-                    {
-                        var values = getResponseB.Value.ToArray<int>();
-                        List<int> numbers = values.Select(x => (int)x).ToList();
-                        matrixB.AddRow(i, numbers.ToArray());
-                    }
-                    else
-                    {
-                        throw new NumbersClientException($"Get Row endpoint failed: {getResponseB.Cause}");
-                    }
-                }
-            }
-            else
-            {
-                throw new NumbersClientException($"Init endpoint failed: {initResponse.Cause}");
-            }
-
+            var matrixBuilder = new ParallelMatrixBuilder(_numbersClient);
+            
+            var matrixA = await matrixBuilder.GetMatrix(size, "A");
+            var matrixB = await matrixBuilder.GetMatrix(size, "B");
+            
             return (matrixA, matrixB);
-
         }
 
 

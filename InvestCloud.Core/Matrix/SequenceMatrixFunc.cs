@@ -4,7 +4,7 @@
     {
 
         public SequenceMatrixFunc(int size) : base(size) { }
-        public override MatrixFuncBase<int> DoMultiplication(MatrixFuncBase<int> b)
+        protected override MatrixFuncBase<int> DoMultiplication(MatrixFuncBase<int> b)
         {
             var resultMatrix = new SequenceMatrixFunc(this.rowTotal);
 
