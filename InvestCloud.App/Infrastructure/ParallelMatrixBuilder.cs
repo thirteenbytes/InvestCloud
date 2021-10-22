@@ -12,32 +12,26 @@ namespace InvestCloud.App.Infrastructure
         private readonly INumbersClient _numbersClient;
         public ParallelMatrixBuilder(INumbersClient numbersClient)
             => _numbersClient = numbersClient;
-        public async Task<ParallelForMatrixFunc> GetMatrix(int size, string dataset)
-        {
 
-            var initCallResponse = await _numbersClient.Initialize(size);
-            if(initCallResponse.Success)
+        public Task<ParallelForMatrixFunc> GetMatrix(int size, string dataset)
+        {                            
+            var matrix = new ParallelForMatrixFunc(size);
+
+            Parallel.For(0, size, i =>
             {
-                int initResponseSize = initCallResponse.Value;
-                var matrix = new ParallelForMatrixFunc(size);
-
-                for(var i = 0; i < initResponseSize; i++)
+                var getResponse = _numbersClient.GetRow(dataset, i);
+                if (getResponse.Result.Success)
                 {
-                    var getResponse = await _numbersClient.GetRow(dataset, i);
-                    if(getResponse.Success)
-                    {
-                        var values = getResponse.Value.ToArray<int>();
-                        matrix.AddRow(i, values);
-                    }
-                    else
-                    {
-                        throw new NumbersClientException($"Get Row endpoint failed: {getResponse.Cause}");
-                    }
+                    var values = getResponse.Result.Value.ToArray<int>();
+                    matrix.AddRow(i, values);
+                }
+                else
+                {
+                    throw new NumbersClientException($"Get Row endpoint failed: {getResponse.Result.Cause}");
                 }
 
-                return matrix;
-            }            
-            throw new NumbersClientException($"Init endpoint failed: {initCallResponse.Cause}");            
+            });            
+            return Task.FromResult(matrix);
         }
     }
 }

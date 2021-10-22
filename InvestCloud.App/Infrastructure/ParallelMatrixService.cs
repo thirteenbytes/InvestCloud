@@ -73,14 +73,17 @@ namespace InvestCloud.App.Infrastructure
 
         private async Task<(ParallelForMatrixFunc, ParallelForMatrixFunc)> GetMatrices(int size)
         {
-            var matrixBuilder = new ParallelMatrixBuilder(_numbersClient);
-            
-            var matrixA = await matrixBuilder.GetMatrix(size, "A");
-            var matrixB = await matrixBuilder.GetMatrix(size, "B");
-            
-            return (matrixA, matrixB);
-        }
+            var initCallResponse = await _numbersClient.Initialize(size);
+            if (initCallResponse.Success)
+            {
+                var matrixBuilder = new ParallelMatrixBuilder(_numbersClient);
+                var matrixA = await matrixBuilder.GetMatrix(size, "A");
+                var matrixB = await matrixBuilder.GetMatrix(size, "B");
 
+                return (matrixA, matrixB);
+            }
+            throw new NumbersClientException($"Init endpoint failed: {initCallResponse.Cause}");
+        }
 
     }
 }
