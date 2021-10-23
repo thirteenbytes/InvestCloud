@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 
 namespace InvestCloud.Core.Matrix
 {
-    public class ParallelForMatrixFunc : MatrixFuncBase<int>, IMatrix<int>
+    public class ParallelMatrixFunc : MatrixFuncBase<int>, IMatrix<int>
     {        
-        public ParallelForMatrixFunc(int size) : base(size) { }
+        public ParallelMatrixFunc(int size) : base(size) { }
         
         protected override MatrixFuncBase<int> DoMultiplication(MatrixFuncBase<int> b)
         {
-            var resultMatrix = new ParallelForMatrixFunc(base.rowTotal);
+            var resultMatrix = new ParallelMatrixFunc(base.rowTotal);
             Parallel.For(0, this.rowTotal, i =>
             {
                 Parallel.For(0, b.columnTotal, j =>
                 {
-                    Compute(i, j, this, (ParallelForMatrixFunc)b, resultMatrix);
+                    Compute(i, j, this, (ParallelMatrixFunc)b, resultMatrix);
                 });
             });
 
             return resultMatrix;
         }
 
-        private void Compute(int tempRowIndex, int tempColIndex, ParallelForMatrixFunc a, ParallelForMatrixFunc b, ParallelForMatrixFunc result)
+        private void Compute(int tempRowIndex, int tempColIndex, ParallelMatrixFunc a, ParallelMatrixFunc b, ParallelMatrixFunc result)
         {
             int rowIndex = tempRowIndex;
             int colIndex = tempColIndex;

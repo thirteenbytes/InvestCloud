@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace InvestCloud.App.Infrastructure
 {
-    public class ParallelMatrixBuilder : IMatrixBuilder<ParallelForMatrixFunc>
+    public class ParallelMatrixBuilder : IMatrixBuilder<ParallelMatrixFunc>
     {
         private readonly INumbersClient _numbersClient;
         public ParallelMatrixBuilder(INumbersClient numbersClient)
             => _numbersClient = numbersClient;
 
-        public Task<ParallelForMatrixFunc> GetMatrix(int size, string dataset)
+        public Task<ParallelMatrixFunc> GetMatrix(int size, string dataset)
         {                            
-            var matrix = new ParallelForMatrixFunc(size);
+            var matrix = new ParallelMatrixFunc(size);
 
             Parallel.For(0, size, i =>
             {

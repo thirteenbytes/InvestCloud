@@ -134,7 +134,7 @@ namespace InvestCloud.UnitTesting
         public void ParallelFor_Multiple_2x2_Matrices()
         {
             // Create 2 x 2 Matrix A
-            var a = new ParallelForMatrixFunc(2);
+            var a = new ParallelMatrixFunc(2);
             var row0 = new List<int> { 2, 3 };
             var row1 = new List<int> { 1, 4 };
 
@@ -142,7 +142,7 @@ namespace InvestCloud.UnitTesting
             a.AddRow(1, row1.ToArray());
 
             // Create 2 x 2 Matrix B
-            var b = new ParallelForMatrixFunc(2);
+            var b = new ParallelMatrixFunc(2);
             row0 = new List<int> { 3, 2 };
             row1 = new List<int> { 1, -6 };
 
@@ -164,7 +164,7 @@ namespace InvestCloud.UnitTesting
         public void ParallelFor_Multiple_3x3_Matrices()
         {
             // Create 2 x 2 Matrix A
-            var a = new ParallelForMatrixFunc(3);
+            var a = new ParallelMatrixFunc(3);
             var row0 = new List<int> { 22, 8, -4 };
             var row1 = new List<int> { -1, 1, 34 };
             var row2 = new List<int> { 19, 0, 1 };
@@ -174,7 +174,7 @@ namespace InvestCloud.UnitTesting
             a.AddRow(2, row2.ToArray());
 
             // Create 2 x 2 Matrix B
-            var b = new ParallelForMatrixFunc(3);
+            var b = new ParallelMatrixFunc(3);
             row0 = new List<int> { 14, -1, 0 };
             row1 = new List<int> { 33, -4, 2 };
             row2 = new List<int> { 9, -1, 1 };

@@ -25,26 +25,27 @@ namespace InvestCloud.App.Infrastructure
         public async Task Run(int matrixSize)
         {
             try
-            {                
-                var stopwatch = new Stopwatch();
+            {
+                var usecaseWatch = new Stopwatch();
+                var taskWatch = new Stopwatch();
 
-
+                usecaseWatch.Start();                
                 _logger.LogInformation($"(1/5) Initializing and building Squares Matrices ({matrixSize} X {matrixSize})...");
 
-                stopwatch.Start();
-                (ParallelForMatrixFunc a, ParallelForMatrixFunc b) = await GetMatrices(matrixSize);
-                stopwatch.Stop();
+                taskWatch.Start();
+                (ParallelMatrixFunc a, ParallelMatrixFunc b) = await GetMatrices(matrixSize);
+                taskWatch.Stop();
 
-                _logger.LogInformation($"Build completed at {stopwatch.Elapsed};");
+                _logger.LogInformation($"Build completed, task duration {taskWatch.Elapsed} total time: {usecaseWatch.Elapsed};");
 
                 _logger.LogInformation($"(2/5) Matrices are being multiplied...");
 
-                stopwatch.Reset();
-                stopwatch.Start();
+                taskWatch.Reset();
+                taskWatch.Start();
                 var c = a * b;
-                stopwatch.Stop();
+                taskWatch.Stop();
 
-                _logger.LogInformation($"Calculation completed at {stopwatch.Elapsed};");
+                _logger.LogInformation($"Calculation completed at {taskWatch.Elapsed} total time {usecaseWatch.Elapsed};");
 
                 var matrixAsString = c.ToString();
                 _logger.LogInformation($"(3/5) Creating MD5 Hash from the from string;");
@@ -62,7 +63,8 @@ namespace InvestCloud.App.Infrastructure
                 {
                     throw new NumbersClientException($"Validate error occurred: {passphrase.Cause}!");
                 }
-
+                usecaseWatch.Stop();
+                _logger.LogInformation($"Final time {usecaseWatch.Elapsed}.");                
             }
             catch (Exception ex)
             {
@@ -71,7 +73,7 @@ namespace InvestCloud.App.Infrastructure
 
         }
 
-        private async Task<(ParallelForMatrixFunc, ParallelForMatrixFunc)> GetMatrices(int size)
+        private async Task<(ParallelMatrixFunc, ParallelMatrixFunc)> GetMatrices(int size)
         {
             var initCallResponse = await _numbersClient.Initialize(size);
             if (initCallResponse.Success)
@@ -85,5 +87,32 @@ namespace InvestCloud.App.Infrastructure
             throw new NumbersClientException($"Init endpoint failed: {initCallResponse.Cause}");
         }
 
+
+        // no improvement with duration compared to tGetMatrices
+        //private async Task<(ParallelMatrixFunc, ParallelMatrixFunc)> GetMatricesInParallel(int size)
+        //{
+        //    var tasks = new List<Task<ParallelMatrixFunc>>(2);
+        //    var initCallResponse = await _numbersClient.Initialize(size);
+        //    if (initCallResponse.Success)
+        //    {
+        //        var matrixBuilder = new ParallelMatrixBuilder(_numbersClient);
+
+        //        var matrixA = matrixBuilder.GetMatrix(size, "A").ContinueWith(m =>
+        //        {
+        //           return m.Result;
+        //        });
+        //        var matrixB = matrixBuilder.GetMatrix(size, "B").ContinueWith(m =>
+        //        {
+        //            return m.Result;
+        //        });
+        //        tasks.Add(matrixA);
+        //        tasks.Add(matrixB);
+
+        //        await Task.WhenAll(tasks);
+
+        //        return (matrixA.Result, matrixB.Result);
+        //    }
+        //    throw new NumbersClientException($"Init endpoint failed: {initCallResponse.Cause}");
+        //}
     }
 }

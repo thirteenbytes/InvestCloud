@@ -43,8 +43,8 @@ namespace InvestCloud.UnitTesting
         public void ParallelFor_Multiple_Matrices()
         {
 
-            var a = new ParallelForMatrixFunc(matrixSize);
-            var b = new ParallelForMatrixFunc(matrixSize);
+            var a = new ParallelMatrixFunc(matrixSize);
+            var b = new ParallelMatrixFunc(matrixSize);
             for (int r = 0; r < matrixSize; r++)
             {
                 a.AddRow(r, GetRandomValuesAsInt32Row(matrixSize));
