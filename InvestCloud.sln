@@ -3,18 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestCloud.Core", "InvestCloud.Core\InvestCloud.Core.csproj", "{A5C0F8ED-4016-49BF-93D4-395C884710EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestCloud.Core", "InvestCloud.Core\InvestCloud.Core.csproj", "{A5C0F8ED-4016-49BF-93D4-395C884710EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestCloud.UnitTesting", "InvestCloud.UnitTesting\InvestCloud.UnitTesting.csproj", "{36F08F75-EC43-4283-B5FE-270DA52170FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestCloud.UnitTesting", "InvestCloud.UnitTesting\InvestCloud.UnitTesting.csproj", "{36F08F75-EC43-4283-B5FE-270DA52170FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestCloud.UI", "InvestCloud.UI\InvestCloud.UI.csproj", "{16B38D5E-4200-40F1-AAFD-EF7E2F165583}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestCloud.UI", "InvestCloud.UI\InvestCloud.UI.csproj", "{16B38D5E-4200-40F1-AAFD-EF7E2F165583}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestCloud.App", "InvestCloud.App\InvestCloud.App.csproj", "{BE37C8C0-6086-4078-8D25-0C3320B3B3CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestCloud.App", "InvestCloud.App\InvestCloud.App.csproj", "{BE37C8C0-6086-4078-8D25-0C3320B3B3CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D1D4C372-20D4-40DE-B3B0-D7DC8B72FAE0}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestCloud.WebUI", "InvestCloud.WebUI\InvestCloud.WebUI.csproj", "{C3F7E134-1051-4858-B90E-93CF3B0CDBA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{BE37C8C0-6086-4078-8D25-0C3320B3B3CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE37C8C0-6086-4078-8D25-0C3320B3B3CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE37C8C0-6086-4078-8D25-0C3320B3B3CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3F7E134-1051-4858-B90E-93CF3B0CDBA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3F7E134-1051-4858-B90E-93CF3B0CDBA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3F7E134-1051-4858-B90E-93CF3B0CDBA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3F7E134-1051-4858-B90E-93CF3B0CDBA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
